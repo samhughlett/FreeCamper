@@ -1,0 +1,58 @@
+<% include partials/header %>
+<div class="container font">
+  <h2 class="text-center">Add a New Camping location!!</h2>
+  
+              
+   <form class="form-signin" method="post" action="/campground">
+      
+        <div class="form-label-group">
+          <label for="inputEmail">Campground Name</label>
+          <input class ="form-control" type="text" name="campname" placeholder="Name of the Campground" required autofocus>
+        </div>
+  
+                    <div class="form-label-group">
+          <label for="campgroundImage">Image of the campground</label>
+          <input class ="form-control" type="textarea" name="image" placeholder="Campground Image" required>
+        </div>
+        
+        <div class="form-label-group">
+          <label for="campgroundDiscription">Describe the campground</label>
+          <input class ="form-control" type="textarea" name="discrip" placeholder="Camp Discription" required>
+        </div>
+       <div class="form-label-group">
+                  <label for="campgroundLocation ">Location of campground</label>
+          <div class="row">
+            <div class="col-6">
+                  <input class ="form-control" type="text" name="lat" placeholder="Latitude">
+            </div>
+              <div class="col-6">
+                <input class ="form-control" type="text" name="long" placeholder="Longitude">
+              </div>
+          </div>
+        </div>
+          <div class="form-group">
+            <label for="water">Running water</label>
+            <select class="form-control" name="water">
+              <option>No</option>
+              <option>Yes</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="restroom">Public Restooms</label>
+            <select class="form-control" name="restroom">
+              <option>No</option>
+              <option>Yes</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="fire">Fires Allowed</label>
+            <select class="form-control" name="fire">
+              <option>No</option>
+              <option>Yes</option>
+            </select>
+          </div>
+ 
+        <button class="btn btn-lg btn-secondary btn-dark btn-block" type="submit">Add Campground</button>
+  </form>
+</div>
+<% include partials/footer %>
