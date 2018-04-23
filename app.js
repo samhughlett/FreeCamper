@@ -60,11 +60,11 @@ app.post("/campground", function(req, res){
   });
 });
 app.get("/campground/:id", function(req, res){
-  Campgound.findById(req.params.id, function(err, foundCamp){
+  Campgound.findById(req.params.id).populate("comments").exec(function(err, foundCamp){
      if(err){
          res.render("index")
      }else{
-         res.render("show", {campground: foundCamp});
+          res.render("show", {campground: foundCamp});
           
      }
   });

@@ -8,10 +8,11 @@ var campgroundSchema = new mongoose.Schema({
     fire: String,
     water: String,
     restroom: String,
-    comments:{
+    comments:[{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Comment"
-    }
-    
+    }]
 });
+
 module.exports = mongoose.model("Campground", campgroundSchema);
+console.log (campgroundSchema);
