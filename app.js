@@ -9,7 +9,7 @@ var express     = require("express"),
 //##############################################################################
 
     app.set("view engine", "ejs");
-    mongoose.connect("mongodb://localhost/TechCamps");
+    mongoose.connect("mongodb://localhost/freecamp");
 
 //##############################################################################
 

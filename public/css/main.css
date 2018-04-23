@@ -55,3 +55,18 @@ body {
 .card{
     margin-bottom: 20px;
 }
+#center{
+  margin-left:50%;
+}
+.white{
+  color:white;
+}
+.pushbottom{
+  margin-bottom: 100px;
+}
+a{
+  color:white;
+}
+/*ul{*/
+/*  text-align:left;*/
+/*}*/
