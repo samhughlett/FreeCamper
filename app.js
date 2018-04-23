@@ -1,27 +1,18 @@
-var express = require("express"),
-    app= express(),
-    bodyParser = require("body-parser"),
-    mongoose = require("mongoose");
+var express     = require("express"),
+    app         = express(),
+    bodyParser  = require("body-parser"),
+    mongoose    = require("mongoose"),
+    Campgound   = require("./models/camps"),
+    seedDB      = require("./seed");
     
-app.set("view engine", "ejs");
-mongoose.connect("mongodb://localhost/TechCamps");
+    seedDB()
 //##############################################################################
 
-              
-var campgroundSchema = new mongoose.Schema({
-    name: String,
-    lat: String,
-    long: String,
-    image: String,
-    discrip:String,
-    wifi: Boolean,
-    electricity: Boolean,
-    cabin: Boolean
-    
-});
-var Campgound = mongoose.model("Campground", campgroundSchema);
+    app.set("view engine", "ejs");
+    mongoose.connect("mongodb://localhost/TechCamps");
 
 //##############################################################################
+
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + "/public"));
 app.get("/", function(req, res){

@@ -1,14 +1,23 @@
 <% include partials/header %>
 
 <h1><%=campground.name%></h1>
-<img class="card-img-top text-danger text-center mx-auto img-fluid img-thumbnail"  src="<%=campground.image%>" alt="Image failed to load">
-<h3> Campground Coords: <%= campground.lat %> <%=campground.long%></h3>
+<img class="card-img-top text-danger text-center mx-auto img-fluid img-thumbnail" src="<%=campground.image%>" width="50%"alt="Image failed to load">
+    <h3> Campground Coords: <%= campground.lat %> <%=campground.long%></h3>
+        <p> <%= campground.discrip%></p>
+        <p>Does this campground have and or allow:</p>
+        <ul>
+            <li>Public Restrooms: <%=campground.restroom%></li>
+            <li>Running Water: <%=campground.water%></li>
+            <li>Cell Service: <%=campground.cell%></li>
+            <li>Rv Slots: <%=campground.rv%></li>
+            <li>Fires: <%=campground.fire%></li>
+        </ul>
 <div class="container text-center">
     <div class="container">
         <div class="row">
             <form method="post" action="#" >
                 <div class="col-12">
-                    <input class ="form-control" type="text" name="review" placeholder="your review"></input>
+                    <textarea class ="form-control" type="text" name="review" placeholder="your review"></textarea>
                     <button class="btn btn-secondary btn-block">Add Review</button>
                 </div>
             </form>
