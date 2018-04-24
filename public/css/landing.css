@@ -13,8 +13,11 @@ body {
   margin-top: 10%;
 }
 .jumbotron{
-  border-radius: 25px;
-  background-color: rgba(0, 0, 0, .1)
+  margin-top: 10px;
+  border-radius: 150px;
+  background-image:url("http://www.freepngimg.com/download/globe/4-2-globe-png-file.png");
+  background-repeat: no-repeat;
+  background-size:25% ;
  
 }
 hr { 
@@ -29,4 +32,7 @@ a{
   margin-bottom: -2%;
   margin-top: 20px;
 
+}
+.top10{
+    margin-top: 10px;
 }

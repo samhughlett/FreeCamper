@@ -44,14 +44,15 @@ body {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
-.textshadow{
-  text-shadow:3px 3px 5px white, 4px 4px 3px black;
-}
+/*.textshadow{*/
+/*  text-shadow:3px 3px 5px white, 4px 4px 3px black;*/
+/*}*/
 .jumbotron{
-  border-radius: 25px;
-  background-color: rgba(0, 0, 0, .1)
- 
-}
+  border-radius: 150px;
+  background-image:url("http://www.freepngimg.com/download/globe/4-2-globe-png-file.png");
+  background-repeat: no-repeat;
+  background-size:25% ;
+ }
 .card{
     margin-bottom: 20px;
 }
@@ -67,6 +68,10 @@ body {
 a{
   color:white;
 }
-/*ul{*/
-/*  text-align:left;*/
-/*}*/
+.bordergreen{
+ border:1px solid darkgreen;
+ border-radius:5px;
+}
+.top10{
+    margin-top: 10px;
+}
