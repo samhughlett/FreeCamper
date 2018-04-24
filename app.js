@@ -2,7 +2,7 @@ var express     = require("express"),
     app         = express(),
     bodyParser  = require("body-parser"),
     mongoose    = require("mongoose"),
-    Campgound   = require("./models/camps"),
+    Campground   = require("./models/camps"),
     seedDB      = require("./seed");
     
     seedDB()
@@ -20,15 +20,15 @@ app.get("/", function(req, res){
    
 });
 app.get("/campground/new", function(req, res){
-   res.render("new.ejs");
+   res.render("campgrounds/new.ejs");
    
 });
 app.get("/campground", function(req, res){
-    Campgound.find({}, function(err, allCampgrounds){
+    Campground.find({}, function(err, allCampgrounds){
         if(err){
             res.render("error")
         }else{
-              res.render("index", {campgrounds: allCampgrounds});
+              res.render("campgrounds/index", {campgrounds: allCampgrounds});
   
         }
     });
@@ -50,7 +50,7 @@ app.post("/campground", function(req, res){
       fire = req.body.fire,
       water = req.body.water,
       newitem = {name: name, image: image, discrip: discrip, long: long, lat: lat, restroom: restroom, water: water, fire: fire};
-  Campgound.create(newitem, function(err, newlyCreated){
+  Campground.create(newitem, function(err, newlyCreated){
       if(err){
           res.render("error");
       }else{
@@ -60,16 +60,28 @@ app.post("/campground", function(req, res){
   });
 });
 app.get("/campground/:id", function(req, res){
-  Campgound.findById(req.params.id).populate("comments").exec(function(err, foundCamp){
+  Campground.findById(req.params.id).populate("comments").exec(function(err, foundCamp){
      if(err){
-         res.render("index")
+         res.render("campgrounds/index")
      }else{
-          res.render("show", {campground: foundCamp});
+          res.render("campgrounds/show", {campground: foundCamp});
           
      }
   });
 });
 
+app.get("/campground/:id/comments/new", function(req, res){
+    Campground.findById(req.params.id, function(err, campground){
+        if (err){
+            res.render("error")
+        } else{
+          res.render("comments/new", {campground: campground});  
+        }
+    });
+});
+app.post("/campground/:id/comments", function(req, res){
+ 
+});
 
 //##############################################################################
 app.listen(process.env.PORT, process.env.IP, function(){
