@@ -1,24 +1,36 @@
 <% include ../partials/header %>
-<div class="container center bg-dark white">
-<h1 class="text-center"><%=campground.name%></h1>
-<img class="card-img-top text-danger text-left mx-auto img-fluid img-thumbnail" src="<%=campground.image%>" width="50%"alt="Image failed to load">
-    <h3 class="text-center bg-dark"> Campground Coords: <%= campground.lat %> <%=campground.long%></h3>
-        <p> <%= campground.discrip%></p>
-                <p>Campground Aminities</p>
-                       <div>Public Restrooms: <%=campground.restroom%></div>
-                <div>Running Water: <%=campground.water%></div>
-                <div>Cell Service: <%=campground.cell%></div>
-                <div>Rv Slots: <%=campground.rv%></div>
-                <div>Fires: <%=campground.fire%></div>
-              <h3 class="border text-center bg-dark">Comments</h3>
-        <div class=" text-center">
-        <%campground.comments.forEach(function(comment){%>
-        <div class="bg-dark">
-               <strong><%=comment.author%></strong>: <%=comment.text%>
-            <% })%>
-        <div class="row pushbottom">
+<div class="container center">
+    <div class="row">
+        <div class="row col-md-3">
+            <p>Comments</p>
+        </div>
+        <div class=" col-md-9 bg-dark">
+            <div class="center bg-dark white">
+    <h1 class="text-center"><%=campground.name%></h1>
+    <img class="card-img-top text-danger text-left mx-auto img-fluid img-thumbnail" src="<%=campground.image%>" width="50%"alt="Image failed to load">
+        <h3 class="text-center bg-dark"> Campground Coords: <%= campground.lat %> <%=campground.long%></h3>
+            <p> <%= campground.discrip%></p>
+                    <p>Campground Aminities</p>
+                           <div>Public Restrooms: <%=campground.restroom%></div>
+                    <div>Running Water: <%=campground.water%></div>
+                    <div>Cell Service: <%=campground.cell%></div>
+                    <div>Rv Slots: <%=campground.rv%></div>
+                    <div>Fires: <%=campground.fire%></div>
+                  <h3 class="border text-center bg-dark">Comments</h3>
+            <div class=" text-center">
+            <%campground.comments.forEach(function(comment){%>
+            <div class="bg-dark">
+                   <strong><%=comment.author%></strong>: <%=comment.text%>
+                <% })%>
+                </div>
+            <div class="row pushbottom">
+                &nbsp
+            </div>
         </div>
     </div>
+        
+    </div>
+  </div>  
 </div>
 <!--<div class=" text-center bg-dark">-->
 <!--    <div class="container">-->
@@ -32,6 +44,6 @@
 <!--        </div>-->
 <!--    </div>-->
 <!--</div>-->
-</div>
+
 <% include ../partials/footershow %>
 
