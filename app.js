@@ -2,10 +2,11 @@ var express     = require("express"),
     app         = express(),
     bodyParser  = require("body-parser"),
     mongoose    = require("mongoose"),
-    Campground   = require("./models/camps"),
-    seedDB      = require("./seed");
+    Campground  = require("./models/camps"),
+    seedDB      = require("./seed"),
+    Comment     = require("./models/comment");
     
-    seedDB()
+    // seedDB()
 //##############################################################################
 
     app.set("view engine", "ejs");
@@ -80,7 +81,21 @@ app.get("/campground/:id/comments/new", function(req, res){
     });
 });
 app.post("/campground/:id/comments", function(req, res){
- 
+    Campground.findById(req.params.id, function(err, campground){
+        if (err){
+            res.render("error");
+        } else{
+            Comment.create(req.body.comment, function(err, comment){
+                if (err){
+                    res.render("error");
+                } else{
+                    campground.comments.push(comment);
+                    campground.save();
+                    res.redirect("/campground/"+ campground._id);
+                }
+            });
+        }
+    });
 });
 
 //##############################################################################
