@@ -6,7 +6,7 @@ var express     = require("express"),
     seedDB      = require("./seed"),
     Comment     = require("./models/comment");
     
-   // seedDB()
+//   seedDB()
 //##############################################################################
 
     app.set("view engine", "ejs");
@@ -50,6 +50,7 @@ app.post("/campground", function(req, res){
       restroom =req.body.restroom,
       fire = req.body.fire,
       water = req.body.water,
+      state = req.body.state,
       newitem = {name: name, image: image, discrip: discrip, long: long, lat: lat, restroom: restroom, water: water, fire: fire};
   Campground.create(newitem, function(err, newlyCreated){
       if(err){
