@@ -1,33 +1,53 @@
 <% include ../partials/header %>
 <div class="container center">
-    <div class="row">
-        <div class="row col-md-3">
-            <p>Comments</p>
+    <div class="row bg-dark white">
+        <div class="row col-lg-3 no-gutters">
+            <div class=" justify-content-center">
+               <h3 class="text-center">Comments</h3> 
+               <div class="bordergreen2 padding-5 pushbottom">
+             <ul>
+            <%campground.comments.forEach(function(comment){%>
+            <li><strong><%=comment.author%>:</strong>
+                <ol>
+                    <li><%=comment.text%></li>
+                </ol>
+                </li>
+            <% })%>
+            </ul>
+            </div>
+            <a class="btn btn-block btn-info" href="/campground/<%=campground.id%>/comments/new">Add a Review</a>
+            </div>
         </div>
-        <div class=" col-md-9 bg-dark">
+    
+        <div class="col-lg-9">
             <div class="center bg-dark white">
     <h1 class="text-center"><%=campground.name%></h1>
     <img class="card-img-top text-danger text-left mx-auto img-fluid img-thumbnail" src="<%=campground.image%>" width="50%"alt="Image failed to load">
         <h3 class="text-center bg-dark"> Campground Coords: <%= campground.lat %> <%=campground.long%></h3>
             <p> <%= campground.discrip%></p>
+            </div>
+            <div class="row">
+                <div class="col-6 col*">      
                     <p>Campground Aminities</p>
-                           <div>Public Restrooms: <%=campground.restroom%></div>
-                    <div>Running Water: <%=campground.water%></div>
-                    <div>Cell Service: <%=campground.cell%></div>
-                    <div>Rv Slots: <%=campground.rv%></div>
-                    <div>Fires: <%=campground.fire%></div>
-                  <h3 class="border text-center bg-dark">Comments</h3>
-            <div class=" text-center">
-            <%campground.comments.forEach(function(comment){%>
-            <div class="bg-dark">
-                   <strong><%=comment.author%></strong>: <%=comment.text%>
-                <% })%>
+                        <ul>
+                            <li>Fires            : <%=campground.fire%></li>
+                            <li>Rv Slots         : <%=campground.rv%></li>
+                            <li>Cell Service     : <%=campground.cell%></li>
+                            <li>Running          : <%=campground.water%></li>
+                            <li>Public Restrooms : <%=campground.restroom%></li>
+                        </ul>
                 </div>
+                <div class="col-6 col*">
+                    <p> We Recomned This Product</p>    
+                    
+                    
+                </div>
+            </div>       
             <div class="row pushbottom">
                 &nbsp
             </div>
         </div>
-    </div>
+    
         
     </div>
   </div>  

@@ -1,6 +1,6 @@
 {
   "name": "yelpcamp",
-  "version": "3.9",
+  "version": "3.9.3",
   "description": "",
   "main": "app.js",
   "scripts": {

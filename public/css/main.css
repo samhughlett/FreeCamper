@@ -70,11 +70,32 @@ a{
 }
 .bordergreen{
  border:1px solid darkgreen;
- border-radius:5px;
 }
 .top10{
     margin-top: 10px;
 }
 .bottom10{
     margin-bottom: 10px;
+}
+.bg-green{
+  background-color: rgba(76, 90, 48, 1)
+}
+.gutter15{
+  padding: 0 15px;
+}
+ul{
+  list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+ol{
+  list-style-type: none;
+}
+.padding-5{
+  padding:5px;
+  
+}
+.bordergreen2{
+ border:2px solid darkgreen;
+ border-radius:5px;
 }
