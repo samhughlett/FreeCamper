@@ -1,21 +1,32 @@
-var express     = require("express"),
-    app         = express(),
-    bodyParser  = require("body-parser"),
-    mongoose    = require("mongoose"),
-    Campground  = require("./models/camps"),
-    seedDB      = require("./seed"),
-    Comment     = require("./models/comment");
+var express         = require("express"),
+    app             = express(),
+    bodyParser      = require("body-parser"),
+    mongoose        = require("mongoose"),
+    seedDB          = require("./seed"),
+    Comment         = require("./models/comment"),
+    Campground      = require("./models/camps"),
+    User            = require("./models/user"),
+    passport        = require("passport"),
+    LocalStrategy   = require("passport-local");
     
 //   seedDB()
 //##############################################################################
 
     app.set("view engine", "ejs");
     mongoose.connect("mongodb://localhost/freecamp");
-
+    app.use(bodyParser.urlencoded({extended: true}));
+    app.use(express.static(__dirname + "/public"));
+    app.use(require("express-session")({
+        secret: "freecampingiscool",
+        resave: false,
+        saveUninitialized: false
+    }));
+    app.use(passport.initialize());
+    app.use(passport.session());
+    passport.use(new LocalStrategy(User.authenticate()));
+    passport.serializeUser(User.serializeUser());
+    passport.deserializeUser(User.deserializeUser());
 //##############################################################################
-
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(express.static(__dirname + "/public"));
 app.get("/", function(req, res){
    res.render("landing");
    
@@ -27,7 +38,7 @@ app.get("/campground/new", function(req, res){
 app.get("/campground", function(req, res){
     Campground.find({}, function(err, allCampgrounds){
         if(err){
-            res.render("error")
+            res.render("error");
         }else{
               res.render("campgrounds/index", {campgrounds: allCampgrounds});
   
@@ -35,10 +46,7 @@ app.get("/campground", function(req, res){
     });
 });
 
-app.get("/login", function(req, res){
-  res.render("login");
- 
-});
+
  
 
 app.post("/campground", function(req, res){
@@ -97,6 +105,37 @@ app.post("/campground/:id/comments", function(req, res){
             });
         }
     });
+});
+//=====================Autherazation Routes==========================
+
+app.get("/signup", function(req, res){
+  res.render("users/signup");
+});
+
+app.post("/signup", function(req, res){
+    req.body.username;
+    req.body.password;
+    var newUser= new User({username: req.body.username});
+    User.register(newUser, req.body.password, function(err, user){
+        if(err){
+            console.log(err)
+            return res.render("error");
+            }
+        passport.authenticate("local")(req, res, function(){
+           return res.redirect("/campground");
+            });
+        });
+    });
+
+app.get("/login", function(req, res){
+  res.render("users/login");
+});
+
+app.post("/login",  passport.authenticate("local", 
+    { 
+    successRedirect: '/campground', 
+    failureRedirect: '/login' }), 
+    function(req, res){
 });
 
 //##############################################################################

@@ -8,6 +8,9 @@ var campgroundSchema = new mongoose.Schema({
     fire: String,
     water: String,
     restroom: String,
+    state: String,
+    cell: String,
+    rvParking: String,
     comments:[{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Comment"

@@ -1,7 +1,8 @@
-html,
 body {
   height: 100%;
-  background-color: rgb(240, 240, 255);
+  width:100%;
+  background-color: rgba(85, 107, 47, 1);
+  background-clip: border-box;
 }
 .font{
    font-family: 'Roboto Mono', monospace;
@@ -98,4 +99,7 @@ ol{
 .bordergreen2{
  border:2px solid darkgreen;
  border-radius:5px;
+}
+.card img{
+  height: 200px;
 }
