@@ -26,6 +26,10 @@ var express         = require("express"),
     passport.use(new LocalStrategy(User.authenticate()));
     passport.serializeUser(User.serializeUser());
     passport.deserializeUser(User.deserializeUser());
+    app.use(function (req, res, next){
+        res.locals.currentUser = req.user;
+        next();
+    });
 //##############################################################################
 app.get("/", function(req, res){
    res.render("landing");
@@ -40,7 +44,7 @@ app.get("/campground", function(req, res){
         if(err){
             res.render("error");
         }else{
-              res.render("campgrounds/index", {campgrounds: allCampgrounds});
+              res.render("campgrounds/index", {campgrounds: allCampgrounds, currentUser: req.user });
   
         }
     });
@@ -80,7 +84,7 @@ app.get("/campground/:id", function(req, res){
   });
 });
 
-app.get("/campground/:id/comments/new", function(req, res){
+app.get("/campground/:id/comments/new", loggedIn, function(req, res){
     Campground.findById(req.params.id, function(err, campground){
         if (err){
             res.render("error")
@@ -89,7 +93,7 @@ app.get("/campground/:id/comments/new", function(req, res){
         }
     });
 });
-app.post("/campground/:id/comments", function(req, res){
+app.post("/campground/:id/comments", loggedIn, function(req, res){
     Campground.findById(req.params.id, function(err, campground){
         if (err){
             res.render("error");
@@ -117,6 +121,8 @@ app.post("/signup", function(req, res){
     req.body.password;
     var newUser= new User({username: req.body.username});
     User.register(newUser, req.body.password, function(err, user){
+                    console.log(req.body.username);
+            console.log(req.body.password);
         if(err){
             console.log(err)
             return res.render("error");
@@ -124,6 +130,8 @@ app.post("/signup", function(req, res){
         passport.authenticate("local")(req, res, function(){
            return res.redirect("/campground");
             });
+            console.log("username is: "+req.body.username);
+            console.log("password is: "+req.body.password);
         });
     });
 
@@ -131,13 +139,24 @@ app.get("/login", function(req, res){
   res.render("users/login");
 });
 
-app.post("/login",  passport.authenticate("local", 
+app.post("/login", passport.authenticate("local", 
     { 
-    successRedirect: '/campground', 
-    failureRedirect: '/login' }), 
-    function(req, res){
+        successRedirect: '/campground', 
+        failureRedirect: '/login' 
+    }), function(req, res){});
+
+app.get("/logout", function(req, res) {
+    req.logout();
+    res.redirect("/campground");
 });
 
+//middlewares
+function loggedIn(req, res, next){
+    if(req.isAuthenticated()){
+        return next();
+    } 
+    res.redirect("/login")
+}
 //##############################################################################
 app.listen(process.env.PORT, process.env.IP, function(){
    console.log("The server is now up and runing share your content"); 

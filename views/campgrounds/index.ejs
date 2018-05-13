@@ -1,7 +1,7 @@
 
 <% include ../partials/header %>
 <div class="container font">
-<header class="jumbotron  white bg-dark top10">
+<div class="jumbotron  white bg-dark top10">
     <div class=" text-center">
         <h1 class="textshadow">Camp around the world with us!</h1>
         <hr>
@@ -10,7 +10,7 @@
             <button class="btn btn-outline-dark my-2 my-sm-0 white" type="submit">Search</button>
         </form>
     </div>
-</header>
+</div>
 
 <div class="row text-center">
     <% campgrounds.forEach(function(campground){%>
@@ -24,8 +24,7 @@
                         <p class="card-text text-light"><%= campground.discrip%></p>
                         <a href="/campground/<%=campground.id%>" class="btn btn-secondary">Read More</a>
                       </div>
-                      <%console.log(campground.state)%>
-                </div>
+                    </div>
         </div>
     
     <% }); %>
