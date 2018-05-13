@@ -30,133 +30,21 @@ var express         = require("express"),
         res.locals.currentUser = req.user;
         next();
     });
+//=============================================================================
+//                               Routes
+const   commentsRoutes      = require("./routes/comments"),
+        campgroundRoutes    = require("./routes/campground"),
+        indexRoutes      = require("./routes/index");
 //##############################################################################
 app.get("/", function(req, res){
    res.render("landing");
    
 });
-app.get("/campground/new", function(req, res){
-   res.render("campgrounds/new.ejs");
-   
-});
-app.get("/campground", function(req, res){
-    Campground.find({}, function(err, allCampgrounds){
-        if(err){
-            res.render("error");
-        }else{
-              res.render("campgrounds/index", {campgrounds: allCampgrounds, currentUser: req.user });
-  
-        }
-    });
-});
 
+app.use(indexRoutes);
+app.use(campgroundRoutes);
+app.use(commentsRoutes);
 
- 
-
-app.post("/campground", function(req, res){
-  var name = req.body.campname,
-      image = req.body.image,
-      discrip =req.body.discrip,
-      long = req.body.long,
-      lat = req.body.lat,
-      restroom =req.body.restroom,
-      fire = req.body.fire,
-      water = req.body.water,
-      state = req.body.state,
-      newitem = {name: name, image: image, discrip: discrip, long: long, lat: lat, restroom: restroom, water: water, fire: fire};
-  Campground.create(newitem, function(err, newlyCreated){
-      if(err){
-          res.render("error");
-      }else{
-          res.redirect("/campground");
-          console.log(req.body);
-      }
-  });
-});
-app.get("/campground/:id", function(req, res){
-  Campground.findById(req.params.id).populate("comments").exec(function(err, foundCamp){
-     if(err){
-         res.render("campgrounds/index")
-     }else{
-          res.render("campgrounds/show", {campground: foundCamp});
-          
-     }
-  });
-});
-
-app.get("/campground/:id/comments/new", loggedIn, function(req, res){
-    Campground.findById(req.params.id, function(err, campground){
-        if (err){
-            res.render("error")
-        } else{
-          res.render("comments/new", {campground: campground});  
-        }
-    });
-});
-app.post("/campground/:id/comments", loggedIn, function(req, res){
-    Campground.findById(req.params.id, function(err, campground){
-        if (err){
-            res.render("error");
-        } else{
-            Comment.create(req.body.comment, function(err, comment){
-                if (err){
-                    res.render("error");
-                } else{
-                    campground.comments.push(comment);
-                    campground.save();
-                    res.redirect("/campground/"+ campground._id);
-                }
-            });
-        }
-    });
-});
-//=====================Autherazation Routes==========================
-
-app.get("/signup", function(req, res){
-  res.render("users/signup");
-});
-
-app.post("/signup", function(req, res){
-    req.body.username;
-    req.body.password;
-    var newUser= new User({username: req.body.username});
-    User.register(newUser, req.body.password, function(err, user){
-                    console.log(req.body.username);
-            console.log(req.body.password);
-        if(err){
-            console.log(err)
-            return res.render("error");
-            }
-        passport.authenticate("local")(req, res, function(){
-           return res.redirect("/campground");
-            });
-            console.log("username is: "+req.body.username);
-            console.log("password is: "+req.body.password);
-        });
-    });
-
-app.get("/login", function(req, res){
-  res.render("users/login");
-});
-
-app.post("/login", passport.authenticate("local", 
-    { 
-        successRedirect: '/campground', 
-        failureRedirect: '/login' 
-    }), function(req, res){});
-
-app.get("/logout", function(req, res) {
-    req.logout();
-    res.redirect("/campground");
-});
-
-//middlewares
-function loggedIn(req, res, next){
-    if(req.isAuthenticated()){
-        return next();
-    } 
-    res.redirect("/login")
-}
 //##############################################################################
 app.listen(process.env.PORT, process.env.IP, function(){
    console.log("The server is now up and runing share your content"); 
