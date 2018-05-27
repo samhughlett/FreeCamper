@@ -4,6 +4,8 @@ const   mongoose    = require("mongoose"),
             email: String,
             username: String,
             password: String,
+            isAdmin: {type: Boolean, default: false},
+            isOwner: {type: Boolean, default:false},
             comments:[{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Comment"

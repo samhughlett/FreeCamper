@@ -18,10 +18,22 @@
     
         <div class="col-lg-9">
             <div class="center bg-dark white">
-            <h1 class="text-center"><%=campground.name%></h1>
-            <img class="card-img-top text-danger text-left mx-auto img-fluid img-thumbnail" src="<%=campground.image%>" width="50%"alt="Image failed to load">
-            <h3 class="text-center bg-dark"> Campground Coords: <%= campground.lat %> <%=campground.long%></h3>
-            <p> <%= campground.discrip%></p>
+                <h1 class="text-center"><%=campground.name%></h1>
+                <img class="card-img-top text-danger text-left mx-auto img-fluid img-thumbnail" src="<%=campground.image%>" width="50%"alt="Image failed to load">
+                <h3 class="text-center bg-dark"> Campground Coords: <%= campground.lat %> <%=campground.long%></h3>
+                <p> <%= campground.discrip%></p>
+                <p> <%= campground.username%></p>
+
+                    <div class="col-md-3">
+                        <a class="btn btn-block btn-secondary bottomspace " href="/campground/<%=campground.id%>/edit" class="btn btn-secondary">edit</a>
+                    </div>
+                    <div class="col-md-3">   
+                       <form class="" action="/campground/<%=campground._id%>?_method=DELETE" method="POST">
+                            <button class="btn btn-block btn-warning">Delete</button>
+                        </form>
+                    </div>
+
+                <div class="col-md-6">
             </div>
             <div class="row">
                 <div class="col-6 col*">      
@@ -55,7 +67,7 @@
                     
                 </div>
             </div>       
-<div class="row pushbottom"> &nbsp</div>
+            <div class="row pushbottom"> &nbsp</div>
         </div>
     
         

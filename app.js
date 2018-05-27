@@ -1,26 +1,29 @@
-var express         = require("express"),
+require('dotenv').config();
+var express         = require('express'),
     app             = express(),
-    bodyParser      = require("body-parser"),
-    mongoose        = require("mongoose"),
-    seedDB          = require("./seed"),
-    Comment         = require("./models/comment"),
-    Campground      = require("./models/camps"),
-    User            = require("./models/user"),
-    passport        = require("passport"),
-    LocalStrategy   = require("passport-local");
+    bodyParser      = require('body-parser'),
+    mongoose        = require('mongoose'),
+    seedDB          = require('./seed'),
+    method          = require('method-override'),
+    Comment         = require('./models/comment'),
+    Campground      = require('./models/camps'),
+    User            = require('./models/user'),
+    passport        = require('passport'),
+    LocalStrategy   = require('passport-local');
     
-//   seedDB()
+ //  seedDB()
 //##############################################################################
 
-    app.set("view engine", "ejs");
-    mongoose.connect("mongodb://localhost/freecamp");
+    app.set('view engine', 'ejs');
+    mongoose.connect('mongodb://localhost/freecamp');
     app.use(bodyParser.urlencoded({extended: true}));
-    app.use(express.static(__dirname + "/public"));
-    app.use(require("express-session")({
-        secret: "",
+    app.use(express.static(__dirname + '/public'));
+    app.use(require('express-session')({
+        secret: process.env.SESSION,
         resave: false,
         saveUninitialized: false
     }));
+    app.use(method('_method'));
     app.use(passport.initialize());
     app.use(passport.session());
     passport.use(new LocalStrategy(User.authenticate()));
@@ -32,20 +35,20 @@ var express         = require("express"),
     });
 //=============================================================================
 //                               Routes
-const   commentsRoutes      = require("./routes/comments"),
-        campgroundRoutes    = require("./routes/campground"),
-        indexRoutes      = require("./routes/index");
+const   commentsRoutes      = require('./routes/comments'),
+        campgroundRoutes    = require('./routes/campground'),
+        indexRoutes         = require('./routes/index');
 //##############################################################################
-app.get("/", function(req, res){
-   res.render("landing");
+app.get('/', function(req, res){
+   res.render('landing');
    
 });
 
-app.use(indexRoutes);
-app.use(campgroundRoutes);
-app.use(commentsRoutes);
+app.use('/', indexRoutes);
+app.use('/campground', campgroundRoutes);
+app.use('/campground/:id/comments', commentsRoutes);
 
 //##############################################################################
 app.listen(process.env.PORT, process.env.IP, function(){
-   console.log("The server is now up and runing share your content"); 
+   console.log('The server is now up and runing share your content'); 
 });

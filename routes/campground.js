@@ -1,25 +1,29 @@
-const   express = require("express"),
-        router  = express.Router(),
-        Campground      = require("../models/camps");
-router.get("/campground/new", function(req, res){
-   res.render("campgrounds/new.ejs");
+const   express         = require('express'),
+        router          = express.Router(),
+        Campground      = require('../models/camps');
+        
+const middle = require('../middleware');       
+router.get('/new', middle.loggedIn, function(req, res){
+   res.render('campgrounds/new.ejs');
    
 });
-router.get("/campground", function(req, res){
+router.get('/', function(req, res){
     Campground.find({}, function(err, allCampgrounds){
         if(err){
-            res.render("error");
+            res.render('error');
         }else{
-              res.render("campgrounds/index", {campgrounds: allCampgrounds, currentUser: req.user });
+              res.render('campgrounds/index', {campgrounds: allCampgrounds, currentUser: req.user });
   
         }
     });
 });
 
 
- 
+//==============================================================================
+//                      CAMPGROUND INFO
+//============================================================================== 
 
-router.post("/campground", function(req, res){
+router.post('/', middle.loggedIn, function(req, res){
   var name = req.body.campname,
       image = req.body.image,
       discrip =req.body.discrip,
@@ -29,33 +33,64 @@ router.post("/campground", function(req, res){
       fire = req.body.fire,
       water = req.body.water,
       state = req.body.state,
-      newitem = {name: name, image: image, discrip: discrip, long: long, lat: lat, restroom: restroom, water: water, fire: fire};
+      rvParking = req.body.rvParking,
+      cell = req.body.cell,
+      ppn = req.body.ppn,
+      author = {
+        id:  req.user._id,
+        username: req.user.username
+      },
+      newitem = {author: author, name: name, image: image, discrip: discrip, long: long, lat: lat, restroom: restroom, water: water, fire: fire, state: state, rvParking: rvParking, cell: cell, ppn: ppn};
   Campground.create(newitem, function(err, newlyCreated){
       if(err){
-          res.render("error");
+          res.render('error');
       }else{
-          res.redirect("/campground");
+          res.redirect('/campground');
           console.log(req.body);
       }
   });
 });
-router.get("/campground/:id", function(req, res){
-  Campground.findById(req.params.id).populate("comments").exec(function(err, foundCamp){
+router.get('/:id', function(req, res){
+  Campground.findById(req.params.id).populate('comments').exec(function(err, foundCamp){
      if(err){
-         res.render("campgrounds/index");
+         res.render('campgrounds/index');
      }else{
-          res.render("campgrounds/show", {campground: foundCamp});
+          res.render('campgrounds/show', {campground: foundCamp});
           
      }
   });
 });
+//==============================================================================
+//               GET AND PUT ROUTES FOR EDITING  AND DELETEING
+//==============================================================================
+router.get('/:id/edit', function(req, res){
+    Campground.findById(req.params.id, function(err, foundCamp){
+        if (err){
+            res.redirect('/error');
+        } else {
+            res.render('campgrounds/edit', {campground: foundCamp});
+        }
+    });
+});
 
-//middlewares
-function loggedIn(req, res, next){
-    if(req.isAuthenticated()){
-        return next();
-    } 
-    res.redirect("/login")
-}
+router.put('/:id/edit', function(req, res){
+    Campground.findByIdAndUpdate(req.params.id, req.body.campground, function(err, updatedCamp){
+        if(err){
+            res.render('error');
+        } else {
+            res.redirect('/campground/'+ req.params.id);
+        }
+    });
+});
+
+router.delete('/:id', function(req, res){
+    Campground.findByIdAndRemove(req.params.id, function(err){
+        if (err){
+            res.render('error');
+        } else{
+            res.redirect('/campground');
+        }
+    });
+});
 
 module.exports = router;

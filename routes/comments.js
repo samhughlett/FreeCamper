@@ -1,9 +1,9 @@
 const   express = require("express"),
-        router  = express(),
+        router  = express.Router({mergeParams: true}),
         Comment = require("../models/comment"),
         Campground      = require("../models/camps");
-
-router.get("/campground/:id/comments/new", loggedIn, function(req, res){
+const middle = require('../middleware');
+router.get("/new", middle.loggedIn, function(req, res){
     Campground.findById(req.params.id, function(err, campground){
         if (err){
             res.render("error")
@@ -12,7 +12,7 @@ router.get("/campground/:id/comments/new", loggedIn, function(req, res){
         }
     });
 });
-router.post("/campground/:id/comments", loggedIn, function(req, res){
+router.post("/", middle.loggedIn, function(req, res){
     Campground.findById(req.params.id, function(err, campground){
         if (err){
             res.render("error");
@@ -29,13 +29,36 @@ router.post("/campground/:id/comments", loggedIn, function(req, res){
         }
     });
 });
+//==============================================================================
+//               GET AND PUT ROUTES FOR EDITING  AND DELETEING----- curently working on this
+//==============================================================================
+router.get('/:id/edit', function(req, res){
+    Campground.findById(req.params.id, function(err, foundCamp){
+        if (err){
+            res.redirect('/error');
+        } else {
+            res.render('campgrounds/edit', {campground: foundCamp});
+        }
+    });
+});
 
-//middlewares
-function loggedIn(req, res, next){
-    if(req.isAuthenticated()){
-        return next();
-    } 
-    res.redirect("/login")
-}
+router.put('/:id/edit', function(req, res){
+    Campground.findByIdAndUpdate(req.params.id, req.body.campground, function(err, updatedCamp){
+        if(err){
+            res.render('error');
+        } else {
+            res.redirect('/campground/'+ req.params.id);
+        }
+    });
+});
 
+router.delete('/:id', function(req, res){
+    Campground.findByIdAndRemove(req.params.id, function(err){
+        if (err){
+            res.render('error');
+        } else{
+            res.redirect('/campground');
+        }
+    });
+});
 module.exports = router;

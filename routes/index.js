@@ -1,8 +1,10 @@
 const   express = require("express"),
-        router  = express(),
+        router  = express.Router(),
         passport= require("passport"),
         User    = require("../models/user");
 //=====================Autherazation Routes==========================
+const middle = require('../middleware');
+
 
 router.get("/signup", function(req, res){
   res.render("users/signup");
@@ -13,8 +15,6 @@ router.post("/signup", function(req, res){
     req.body.password;
     var newUser= new User({username: req.body.username});
     User.register(newUser, req.body.password, function(err, user){
-                    console.log(req.body.username);
-            console.log(req.body.password);
         if(err){
             console.log(err)
             return res.render("error");
@@ -43,11 +43,5 @@ router.get("/logout", function(req, res) {
 });
 
 //middlewares
-function loggedIn(req, res, next){
-    if(req.isAuthenticated()){
-        return next();
-    } 
-    res.redirect("/login")
-}
 
 module.exports = router;
