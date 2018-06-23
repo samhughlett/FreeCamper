@@ -14,7 +14,7 @@ var campgroundSchema = new mongoose.Schema({
     ppn: String,
     author:{
         id:{
-              type: mongoose.Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "User"
         },
         username: String
@@ -26,4 +26,3 @@ var campgroundSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model("Campground", campgroundSchema);
-console.log (campgroundSchema);

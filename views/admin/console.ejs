@@ -1,0 +1,11 @@
+<% include ../partials/header %>
+  <div class="row center container top20">
+    <%users.forEach(function(users){%>
+        <div class=" col-md-12 bottomGutter">
+            <div class="col-md-6 btn btn-lg bg-darkO bottom10">
+                <a class="text-danger" href="/campground/admin/console/user/<%=users._id%>"><%=users.username%>
+            </div>
+        </div>
+  <% }); %>
+  </div>
+<% include ../partials/footer %>

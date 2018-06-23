@@ -2,25 +2,38 @@ const   express = require("express"),
         router  = express.Router({mergeParams: true}),
         Comment = require("../models/comment"),
         Campground      = require("../models/camps");
-const middle = require('../middleware');
-router.get("/new", middle.loggedIn, function(req, res){
-    Campground.findById(req.params.id, function(err, campground){
+const   middle = require('../middleware');
+//==============================================================================
+//                           Basic Routing table/ the GET ROUTES
+//==============================================================================
+router.get("/new", middle.loggedIn, (req, res) =>{
+    Campground.findById(req.params.id, (err, campground) =>{
         if (err){
-            res.render("error")
+            res.render("error");
         } else{
           res.render("comments/new", {campground: campground});  
         }
     });
 });
-router.post("/", middle.loggedIn, function(req, res){
-    Campground.findById(req.params.id, function(err, campground){
+
+//==============================================================================
+//                  Basic Routing table/ the POST ROUTES
+//==============================================================================
+// will get shorted by isAuthor middleware
+router.post("/", middle.loggedIn, (req, res) =>{
+    Campground.findById(req.params.id, (err, campground) =>{
         if (err){
             res.render("error");
         } else{
-            Comment.create(req.body.comment, function(err, comment){
+            Comment.create(req.body.comment, (err, comment) =>{
                 if (err){
                     res.render("error");
                 } else{
+                    //working on adding user recongnition. through middleware
+                    comment.author.id = req.user._id;
+                    comment.author.username = req.user.username;
+                    console.log(comment);
+                    comment.save();
                     campground.comments.push(comment);
                     campground.save();
                     res.redirect("/campground/"+ campground._id);
@@ -30,35 +43,49 @@ router.post("/", middle.loggedIn, function(req, res){
     });
 });
 //==============================================================================
-//               GET AND PUT ROUTES FOR EDITING  AND DELETEING----- curently working on this
+//              GET AND PUT ROUTES FOR EDITING COMMENTS
 //==============================================================================
-router.get('/:id/edit', function(req, res){
-    Campground.findById(req.params.id, function(err, foundCamp){
-        if (err){
-            res.redirect('/error');
-        } else {
-            res.render('campgrounds/edit', {campground: foundCamp});
+
+//  Edit the user comments.
+router.get("/:comment_id/edit", middle.loggedIn, (req, res) =>{
+     Comment.findById(req.params.comment_id, (err, foundComment) =>{
+      if (err){
+            res.render("error");
+        } else{
+          res.render("comments/edit", {campground_id: req.params.id, comment: foundComment}); 
+          console.log(req.params.id);
+          console.log(req.params.comment_id);
+          console.log(foundComment.text); // returns undifined..
         }
     });
 });
-
-router.put('/:id/edit', function(req, res){
-    Campground.findByIdAndUpdate(req.params.id, req.body.campground, function(err, updatedCamp){
+// PUSHES THE EDITED COMMENT TO THE DB
+router.put('/:comment_id', middle.loggedIn, (req, res) =>{
+    Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, (err,updated) =>{
         if(err){
             res.render('error');
-        } else {
+        }else{
             res.redirect('/campground/'+ req.params.id);
         }
     });
 });
-
-router.delete('/:id', function(req, res){
-    Campground.findByIdAndRemove(req.params.id, function(err){
+//==============================================================================
+//                  ROUTES FOR DELETEING COMMENTS
+//==============================================================================
+router.delete('/:comment_id', middle.loggedIn, (req, res) =>{
+    Comment.findByIdAndRemove(req.params.comment_id, function(err){
         if (err){
             res.render('error');
         } else{
-            res.redirect('/campground');
+            res.redirect('/campground/' + req.params.id);
         }
     });
+});
+//==============================================================================
+//                  CATCH ALL RAOUTE AND EXPORTS 
+//==============================================================================
+
+router.get("/:*", (req, res) =>{
+    res.render('/notfound');
 });
 module.exports = router;

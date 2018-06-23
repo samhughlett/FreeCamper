@@ -24,19 +24,20 @@ router.get('/', function(req, res){
 //============================================================================== 
 
 router.post('/', middle.loggedIn, function(req, res){
-  var name = req.body.campname,
-      image = req.body.image,
-      discrip =req.body.discrip,
-      long = req.body.long,
-      lat = req.body.lat,
-      restroom =req.body.restroom,
-      fire = req.body.fire,
-      water = req.body.water,
-      state = req.body.state,
-      rvParking = req.body.rvParking,
-      cell = req.body.cell,
-      ppn = req.body.ppn,
-      author = {
+  var 
+    name      = req.body.campname,
+    image     = req.body.image,
+    discrip   = req.body.discrip,
+    long      = req.body.long,
+    lat       = req.body.lat,
+    restroom  = req.body.restroom,
+    fire      = req.body.fire,
+    water     = req.body.water,
+    state     = req.body.state,
+    rvParking = req.body.rvParking,
+    cell      = req.body.cell,
+    ppn       = req.body.ppn,
+    author    = {
         id:  req.user._id,
         username: req.user.username
       },
@@ -63,15 +64,15 @@ router.get('/:id', function(req, res){
 //==============================================================================
 //               GET AND PUT ROUTES FOR EDITING  AND DELETEING
 //==============================================================================
-router.get('/:id/edit', function(req, res){
-    Campground.findById(req.params.id, function(err, foundCamp){
-        if (err){
-            res.redirect('/error');
-        } else {
+router.get('/:id/edit', middle.campOwner, function(req, res){
+            Campground.findById(req.params.id, function(err, foundCamp){
+              if (err){
+                res.render('error');
+              } else{
             res.render('campgrounds/edit', {campground: foundCamp});
-        }
-    });
-});
+          }
+        });
+      });
 
 router.put('/:id/edit', function(req, res){
     Campground.findByIdAndUpdate(req.params.id, req.body.campground, function(err, updatedCamp){
@@ -92,5 +93,8 @@ router.delete('/:id', function(req, res){
         }
     });
 });
+
+
+
 
 module.exports = router;

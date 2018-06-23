@@ -1,18 +1,17 @@
 <% include ../partials/header %>
- <form class="bg-dark white top10" action="/campground/<%=campground._id%>/comments" method="POST">
+<div class="container">
+ <form class="bg-darkO white top10" action="/campground/<%=campground._id%>/comments" method="POST">
   <div class="container">
-      <div class="form-row">
-                    <div class="form-group col-md-2">
-            <label for="author">Author</label>
-            <input type="text" class="form-control" name="comment[author]" value="<%=currentUser.username%>" hidden></input>
-          </div>
-                 <div class="form-group col-md-12">
-          <label for="comment">Add a new comment to <%=campground.name%></label>
-          <textarea type="text" class="form-control" name="comment[text]" placeholder="Your comments go here."></textarea>
-          <sub>Please keep your comments family friendly.</sub>
-        </div>
+     <div class="form-row">
+      <div class="form-group col-md-12">
+        <label for="comment">Add a new comment to <%=campground.name%></label>
+        <textarea type="text" class="form-control" name="comment[text]" placeholder="Your comments go here." required></textarea>
+        <sub>Please keep your comments family friendly.</sub>
+      </div>
     </div>
-  <button class="btn btn-lg btn-secondary btn-dark btn-block border bottom10" type="submit">Add Comment</button>
+      <div class="text-right container">
+        <button class="btn btn-lg bg-darkO btn-lg border bottom10 text-light" type="submit">Add Comment</button>
+      </div>
 </div>
 <div class="top10">&nbsp</div>
 </form>

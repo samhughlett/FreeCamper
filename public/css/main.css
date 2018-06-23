@@ -1,8 +1,10 @@
 html, body {
   height: 100%;
   width:100%;
-  background-color: rgba(85, 107, 47, 1);
-  background-clip: border-box;
+background: #134E5E;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #71B280, #134E5E);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #71B280, #134E5E); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
 }
 .font{
    font-family: 'Roboto Mono', monospace;
@@ -15,7 +17,10 @@ html, body {
     font-family: 'Roboto Mono', monospace;
     font-size: .6em;
 }
-
+.center{
+    text-align: center;
+    margin: 0 auto;
+}
 .form-signin {
   width: 100%;
   max-width: 330px;
@@ -75,6 +80,9 @@ a{
 .top10{
     margin-top: 10px;
 }
+.top20{
+    margin-top: 20px;
+}
 .bottom10{
     margin-bottom: 10px;
 }
@@ -129,4 +137,16 @@ a{
 }
 .bottomspace{
   margin-bottom: 10px;
+}
+.delete-form{
+  display: inline;
+}.bg-darkO{
+  background-color: rgba(0, 0, 0, .1)
+}
+.xspadding{
+  padding: -6px;
+}
+.rounded{
+  border: 0px solid rgba(0, 0, 0, .0);
+  border-radius: 50%;
 }

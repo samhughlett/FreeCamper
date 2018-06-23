@@ -11,7 +11,7 @@ var express         = require('express'),
     passport        = require('passport'),
     LocalStrategy   = require('passport-local');
     
- //  seedDB()
+//  seedDB()
 //##############################################################################
 
     app.set('view engine', 'ejs');
@@ -35,17 +35,21 @@ var express         = require('express'),
     });
 //=============================================================================
 //                               Routes
-const   commentsRoutes      = require('./routes/comments'),
+const   
+        adminRoutes         = require('./routes/admin'),
+commentsRoutes      = require('./routes/comments'),
         campgroundRoutes    = require('./routes/campground'),
+
         indexRoutes         = require('./routes/index');
 //##############################################################################
 app.get('/', function(req, res){
    res.render('landing');
    
 });
-
+app.use('/campground/admin', adminRoutes);
 app.use('/', indexRoutes);
 app.use('/campground', campgroundRoutes);
+
 app.use('/campground/:id/comments', commentsRoutes);
 
 //##############################################################################

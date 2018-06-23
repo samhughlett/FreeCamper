@@ -1,0 +1,58 @@
+<% include ../partials/header %>
+<div class="row text-light">
+    <div class="col-md-6 center bg-darkO top20 container">
+            <form action="/campground/admin/console/user/<%=users._id%>/delete?_method=DELETE" method="POST" >
+                <button class="btn btn-lg btn-danger top10">DELETE USER</button>
+            </form>
+            <form action="/campground/adminConsol/<%=users._id%>?_method=PUT" method="POST">
+            <h1><%=users.username%></h1>
+            <h2><a class="btn btn-md btn-info" href="mailto:<%=users.email%>"><%=users.email%></a></h2>
+            <sub>Users Id Number: <%=users._id%></sub>
+            <div class="">
+                <%if (currentUser.isOwner){%>
+                <div class="col-md-6 form-control center bg-warning text-dark">
+                <label for="isAdmin">Has Owner Rights, Currently: <%=users.isOwner%></label>
+                     <select class ="form-control text-dark" name="isOwner">
+                    <option  name="isOwner"value="<%=users.isOwner%>"></option>
+                    <option name="isOwner" value="true">True</option>
+                    <option name="isOwner" value="false">False</option>
+                </select>
+                <sub>Use This with caution!</sub>
+                </div>
+                <div class="col-md-6 form-control center bg-darkO text-white">
+                <label for="isAdmin">Has Admin Rights, Currently: <%=users.isAdmin%></label>
+                     <select class ="form-control" name="isAdmin">
+                    <option name="isAdmin"value="<%=users.isAdmin%>"></option>
+                    <option name="isAdmin" value="true">True</option>
+                    <option name="isAdmin" value="false">False</option>
+                </select>
+                </div>
+                <div class="col-md-6 center">
+                <button class ="btn btn-lg btn-success">Change Rights?</button>
+                </div>  
+                <div class="col-md-6 form-control center bg-dark text-white">
+                <label for="isCamper">Has Discount Perk, Currently: <%=users.isCamper%></label>
+                <select class ="form-control" name="isCamper">
+                    <option  name="isCamper"value="<%=users.isCamper%>"></option>
+                    <option name="isCamper" value="true">True</option>
+                    <option name="isCamper" value="false">False</option>
+                </select>
+                </div>
+                <% }else{%>
+                <div class="col-md-6 form-control center bg-dark text-white">
+                <label for="isCamper">Set this user to a Camper Status. <%=users.isCamper%></label>
+                <select class ="form-control" name="isCamper">
+                    <option  name="isCamper"value="<%=users.isCamper%>"></option>
+                    <option name="isCamper" value="true">True</option>
+                    <option name="isCamper" value="false">False</option>
+                </select>
+                </div>
+                <div class="col-md-6 center">
+                <button class ="btn btn-lg btn-success top10 bottom10">Change Rights?</button>
+                </div>
+                <% }%>
+            </div>
+        </form>
+    </div>
+</div>
+<% include ../partials/footer %>
