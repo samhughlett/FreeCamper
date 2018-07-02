@@ -55,7 +55,7 @@ background: linear-gradient(to right, #71B280, #134E5E); /* W3C, IE 10+/ Edge, F
 /*}*/
 .jumbotron{
   border-radius: 150px;
-  background-image:url("http://www.freepngimg.com/download/globe/4-2-globe-png-file.png");
+  background-image:url("/images/glob.png");
   background-repeat: no-repeat;
   background-size:100% ;
  }
@@ -117,7 +117,7 @@ ol{
 .jumbotron{
   margin-top: 10px;
   border-radius: 150px;
-  background-image:url("http://www.freepngimg.com/download/globe/4-2-globe-png-file.png");
+  background-image:url("/assets/images/globe.png");
   background-repeat: no-repeat;
   background-size:25% ;
  

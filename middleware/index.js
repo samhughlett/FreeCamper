@@ -1,5 +1,14 @@
 var Comment = require('../models/comment');
 var Campground = require('../models/camps');
+
+const
+    express         = require('express'),
+    app             = express(),
+    router          = express.Router(),
+    client          = require('redis').createClient();
+//================================================================
+//
+//================================================================
 module.exports = {
         loggedIn: function(req, res, next){
         if (req.isAuthenticated()){
@@ -47,5 +56,31 @@ module.exports = {
              }
             }
         )}
-        }
+        },
+        logginLimiter: function (req, res, next){
+
+        },
+//====================================================================\
+//      Add new middleware functions below here then move this breaker.|
+//====================================================================/
 };
+
+
+
+
+
+var mailgun = require("mailgun-js");
+var api_key = 'YOUR_API_KEY';
+var DOMAIN = 'YOUR_DOMAIN_NAME';
+var mailgun = require('mailgun-js')({apiKey: api_key, domain: DOMAIN});
+
+var data = {
+  from: 'Excited User <me@samples.mailgun.org>',
+  to: 'bar@example.com, YOU@YOUR_DOMAIN_NAME',
+  subject: 'Hello',
+  text: 'Testing some Mailgun awesomness!'
+};
+
+mailgun.messages().send(data, function (error, body) {
+  console.log(body);
+});

@@ -40,7 +40,7 @@ router.get('/console/user/:id',middle.loggedIn, middle.isAdmin, (req, res) =>{
          console.log(err);
          res.render("error");
             }else{
-              res.redirect('/campground/admin/console');
+              res.redirect('/campground/admin');
             }
         });
     });

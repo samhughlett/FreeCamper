@@ -1,13 +1,13 @@
 <!DOCTYPE HTML>
 <html>
     <head>
-      
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <title>Find your cheap camp</title>
         <link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" >
-        <link type="text/css" rel="stylesheet" href="/css/main.css" >
+        <link type="text/css" rel="stylesheet" href="/assets/css/main.css" >
         <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet"> 
+        <script src="/assets/js/singnup.js" type="text/javascript"></script>
          </head>
     <body>
       <nav class="navbar container navbar-expand-lg navbar-dark bg-dark sticky-top">
@@ -27,14 +27,6 @@
           <a class="nav-link" href="/campground">Campgrounds</a>
         </li> 
       </ul>
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="/login">Login</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/signup">Sign up</a>
-        </li> 
-      
         <% } else if (currentUser && currentUser.isAdmin){ %>
         <li class="nav-item">
           <a class="nav-link" href="/campground">Home</a>
@@ -60,16 +52,22 @@
         </ul>
         <ul class="navbar-nav ml-auto">
           <%if(!currentUser){%>
-
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/login">Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/signup">Sign up</a>
+        </li>
           <% } else{%>
         <li class="nav-item">
          <a class="nav-link" href="">Logged in as: <%= currentUser.username%></a>
         </li> 
         <li class="nav-item">
           <a class="nav-link" href="/logout">Logout</a>
-        </li>
+        </li> </ul>
         <% } %>
-      </ul>
+     
     </div>
   </div>  
 </nav>

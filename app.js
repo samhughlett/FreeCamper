@@ -4,6 +4,8 @@ var express         = require('express'),
     bodyParser      = require('body-parser'),
     mongoose        = require('mongoose'),
     seedDB          = require('./seed'),
+    router          = express.Router(),
+    client          = require('redis').createClient(),
     method          = require('method-override'),
     Comment         = require('./models/comment'),
     Campground      = require('./models/camps'),
@@ -37,9 +39,8 @@ var express         = require('express'),
 //                               Routes
 const   
         adminRoutes         = require('./routes/admin'),
-commentsRoutes      = require('./routes/comments'),
+        commentsRoutes      = require('./routes/comments'),
         campgroundRoutes    = require('./routes/campground'),
-
         indexRoutes         = require('./routes/index');
 //##############################################################################
 app.get('/', function(req, res){
@@ -49,9 +50,7 @@ app.get('/', function(req, res){
 app.use('/campground/admin', adminRoutes);
 app.use('/', indexRoutes);
 app.use('/campground', campgroundRoutes);
-
 app.use('/campground/:id/comments', commentsRoutes);
-
 //##############################################################################
 app.listen(process.env.PORT, process.env.IP, function(){
    console.log('The server is now up and runing share your content'); 

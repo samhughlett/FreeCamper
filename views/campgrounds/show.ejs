@@ -57,9 +57,10 @@
                                     
                                     <!-- end the icon addition-->
                                     <div class="float-right">
-                                        <%if (currentUser && comment.author.id.equals(currentUser._id)||currentUser.isAdmin){%>
+                                        <%if (!currentUser){%>
+                                        <div></div>
+                                    <% }else if (currentUser && comment.author.id.equals(currentUser._id)||currentUser.isAdmin){%>
                                         <div>
-                                            
                                             <form class="delete-form" action="/campground/<%=campground._id%>/comments/<%=comment._id%>/edit">
                                                 <button class="btn btn-sm btn-info">Edit</button>
                                             </form>
@@ -67,7 +68,6 @@
                                                 <button class="btn btn-sm btn-danger">Delete</button>
                                             </form>
                                         </div>
-                                    
                                     <% }%>
                                     </div>
                                 </div>
