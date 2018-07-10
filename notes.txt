@@ -1,2 +1,0 @@
-db.collection.update({name: "username"}, {$set: {isAdmin: true, isOwner: true, isCamper: true}})
-db.users.update({username: "SamTheOwner"}, {$set: {isAdmin: true, isCamper: true}})
