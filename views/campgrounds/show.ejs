@@ -8,18 +8,19 @@
                <div class="padding-5">
                     <ul>
                         
-                        <li>Fires            : <%=campground.fire%></li>
-                        <li>Rv Slots         : <%=campground.rvParking%></li>
-                        <li>Restrooms : <%=campground.restroom%></li>
-                        <li>Cell Service     : <%=campground.cell%></li>
+                        <li>Fires           : <%=campground.fire%></li>
+                        <li>Rv Slots        : <%=campground.rvParking%></li>
+                        <li>Restrooms       : <%=campground.restroom%></li>
+                        <li>Cell Service    : <%=campground.cell%></li>
                         <li>Running Water   : <%=campground.water%></li>
-                        <li>All for   : <%=campground.ppn%> per night</li>
+                        <li>All for         : <%=campground.ppn%> per night</li>
                         <sub>not liable for price changes</sub>
                         
                     </ul>
                 </div>
                 <div class="padding-5 text-center">
-                <%if (currentUser && campground.author.id.equals(currentUser._id)||currentUser.isAdmin){%>
+                                   
+                <% if  (currentUser && campground.author.id.equals(currentUser._id)||currentUser.isAdmin){%>
                     <a class="btn btn-secondary delete-form" href="/campground/<%=campground.id%>/edit">Edit</a>
                     <form class="delete-form" action="/campground/<%=campground._id%>?_method=DELETE" method="POST">
                     <button class="btn btn-warning delete-form">Delete</button>

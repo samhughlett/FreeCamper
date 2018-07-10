@@ -4,20 +4,25 @@ var express         = require('express'),
     bodyParser      = require('body-parser'),
     mongoose        = require('mongoose'),
     seedDB          = require('./seed'),
+    flash           = require('connect-flash'),
     router          = express.Router(),
-    client          = require('redis').createClient(),
     method          = require('method-override'),
     Comment         = require('./models/comment'),
     Campground      = require('./models/camps'),
     User            = require('./models/user'),
     passport        = require('passport'),
+    nodemailer      =require("nodemailer"),
     LocalStrategy   = require('passport-local');
     
 //  seedDB()
 //##############################################################################
 
     app.set('view engine', 'ejs');
-    mongoose.connect('mongodb://localhost/freecamp');
+    const database = process.env.DATABASECONNECT || 'mongodb://localhost/freecamp'
+    mongoose.connect(database)
+        .then(()=> console.log("database conected"))
+        .catch(err => console.log('database connection error: ${err.message}'));
+    
     app.use(bodyParser.urlencoded({extended: true}));
     app.use(express.static(__dirname + '/public'));
     app.use(require('express-session')({
@@ -25,6 +30,7 @@ var express         = require('express'),
         resave: false,
         saveUninitialized: false
     }));
+    app.use(flash());
     app.use(method('_method'));
     app.use(passport.initialize());
     app.use(passport.session());
@@ -41,14 +47,16 @@ const
         adminRoutes         = require('./routes/admin'),
         commentsRoutes      = require('./routes/comments'),
         campgroundRoutes    = require('./routes/campground'),
+        resetRoutes         = require('./routes/reset'),
         indexRoutes         = require('./routes/index');
 //##############################################################################
 app.get('/', function(req, res){
-   res.render('landing');
+   res.render('index');
    
 });
 app.use('/campground/admin', adminRoutes);
 app.use('/', indexRoutes);
+app.use('/help', resetRoutes);
 app.use('/campground', campgroundRoutes);
 app.use('/campground/:id/comments', commentsRoutes);
 //##############################################################################

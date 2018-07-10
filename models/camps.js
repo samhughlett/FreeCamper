@@ -4,7 +4,7 @@ var campgroundSchema = new mongoose.Schema({
     lat: String,
     long: String,
     image: String,
-    discrip:String,
+    discrip: String,
     fire: String,
     water: String,
     restroom: String,
@@ -12,14 +12,15 @@ var campgroundSchema = new mongoose.Schema({
     cell: String,
     rvParking: String,
     ppn: String,
-    author:{
-        id:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User"
+
+    author: {
+        id: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User"
         },
         username: String
     },
-    comments:[{
+    comments: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Comment"
     }]
