@@ -1,5 +1,5 @@
 
-
+let button =document.getElementById("Button");
 
 const checkPW = function(){
   let password = document.getElementById("password").value;
@@ -7,12 +7,12 @@ const checkPW = function(){
   
   if (password === check){
     document.getElementById("Button").disabled = false;
-    document.getElementById("message").innerHTML="Thank You!!";
+    document.getElementById("message").innerHTML="Passwords match";
   } else{
     document.getElementById("Button").disabled = true;
-    document.getElementById("message").innerHTML="Passwords dont match!";
+    document.getElementById("message").innerHTML="Passwords don\'t match!";
   }
 };
 
-let aaa = document.querySelector("#check");
-aaa.addEventListener("click", checkPW, false);
+button.addEventListener("mouseenter", checkPW, false);
+button.addEventListener("touchenter", checkPW, false);

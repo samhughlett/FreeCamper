@@ -20,6 +20,7 @@ router.get('/', middle.loggedIn, middle.isAdmin, (req, res) => {
       res.render('error');
     }
     else {
+      req.flash("success", "Welcome");
       res.render('admin/console', { users: users });
     }
   });
@@ -35,6 +36,17 @@ router.get('/console/user/:id', middle.loggedIn, middle.isAdmin, (req, res) => {
   });
 });
 
+router.put('/console/user/:id', (req, res)=>{
+    User.findByIdAndUpdate(req.params.id, req.body, (err, updatedUsers) => {
+    if (err) {
+      res.redirect("error");
+    }
+    else {
+      res.render("admin/user", { users: updatedUsers });
+    }
+  });
+});
+
 router.delete('/console/user/:id/delete', middle.loggedIn, middle.isAdmin, (req, res) => {
   User.findByIdAndRemove(req.params.id, (err) => {
     if (err) {
@@ -42,8 +54,10 @@ router.delete('/console/user/:id/delete', middle.loggedIn, middle.isAdmin, (req,
       res.render("error");
     }
     else {
+      req.flash('error', 'You have succesfully deleted a user.');
       res.redirect('/campground/admin');
     }
   });
 });
+
 module.exports = router;

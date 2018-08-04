@@ -1,9 +1,12 @@
-var mongoose = require("mongoose")
+var mongoose = require("mongoose");
+let Comment = require("./comment");
+
 var campgroundSchema = new mongoose.Schema({
     name: String,
     lat: String,
     long: String,
     image: String,
+    imageId: String,
     discrip: String,
     fire: String,
     water: String,
@@ -12,7 +15,6 @@ var campgroundSchema = new mongoose.Schema({
     cell: String,
     rvParking: String,
     ppn: String,
-
     author: {
         id: {
             type: mongoose.Schema.Types.ObjectId,
@@ -26,4 +28,17 @@ var campgroundSchema = new mongoose.Schema({
     }]
 });
 
+campgroundSchema.pre('remove', async function(next){
+    try {
+         await Comment.remove({
+      "_id": {
+        $in: this.comment
+      }
+      });  
+      next()
+    }catch(err){
+        next(err);
+    }
+
+});
 module.exports = mongoose.model("Campground", campgroundSchema);

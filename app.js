@@ -1,4 +1,5 @@
 require('dotenv').config();
+const ejsLint = require('ejs-lint');
 var express         = require('express'),
     app             = express(),
     bodyParser      = require('body-parser'),
@@ -16,7 +17,7 @@ var express         = require('express'),
     
 //  seedDB()
 //##############################################################################
-
+    app.use(flash());
     app.set('view engine', 'ejs');
     const database = process.env.DATABASECONNECT || 'mongodb://localhost/freecamp'
     mongoose.connect(database)
@@ -30,7 +31,7 @@ var express         = require('express'),
         resave: false,
         saveUninitialized: false
     }));
-    app.use(flash());
+    
     app.use(method('_method'));
     app.use(passport.initialize());
     app.use(passport.session());
@@ -39,6 +40,8 @@ var express         = require('express'),
     passport.deserializeUser(User.deserializeUser());
     app.use(function (req, res, next){
         res.locals.currentUser = req.user;
+        res.locals.error  = req.flash('error');
+        res.locals.success  = req.flash('success');
         next();
     });
 //=============================================================================

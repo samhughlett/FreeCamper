@@ -1,4 +1,5 @@
     var mongoose = require("mongoose");
+    let user = ('/users');
 
     var commentSchema = new mongoose.Schema({
         text: String,
@@ -8,10 +9,11 @@
                 ref: "User"
             },
             username: String,
-            isAdmin: { type: Boolean, default: false },
-            isOwner: { type: Boolean, default: false },
-            isCamper: { type: Boolean, default: false }
-        }
+        isAdmin: { type: Boolean},
+        isOwner: { type: Boolean},
+        isCamper: { type: Boolean},
+        },
+        time: String
 
     });
 

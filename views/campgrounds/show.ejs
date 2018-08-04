@@ -2,99 +2,101 @@
 <div class="container">
     <div class="row bg-darkO white">
         <div class="row col-lg-3 no-gutters">
-            <div class="">
-               <h3 class="text-center">Campground Aminities For</h3>
-               <sub><%=campground.state%></sub>
-               <div class="padding-5">
-                    <ul>
-                        
+            <div class="text-center">
+                <h3 class="">Campground Aminities For</h3>
+                <sub class=""><%=campground.name%> in beautiful <%=campground.state%> </sub>
+                <div class="padding-5">
+                    <ul class="text-left">
                         <li>Fires           : <%=campground.fire%></li>
                         <li>Rv Slots        : <%=campground.rvParking%></li>
                         <li>Restrooms       : <%=campground.restroom%></li>
                         <li>Cell Service    : <%=campground.cell%></li>
                         <li>Running Water   : <%=campground.water%></li>
                         <li>All for         : <%=campground.ppn%> per night</li>
-                        <sub>not liable for price changes</sub>
-                        
                     </ul>
+                    <sub class="text-center">not liable for price changes</sub>
                 </div>
                 <div class="padding-5 text-center">
-                                   
-                <% if  (currentUser && campground.author.id.equals(currentUser._id)||currentUser.isAdmin){%>
+                    <% if (currentUser && campground.author.id.equals(currentUser._id)||currentUser && currentUser.isAdmin){%>
                     <a class="btn btn-secondary delete-form" href="/campground/<%=campground.id%>/edit">Edit</a>
                     <form class="delete-form" action="/campground/<%=campground._id%>?_method=DELETE" method="POST">
-                    <button class="btn btn-warning delete-form">Delete</button>
+                        <button class="btn btn-warning delete-form">Delete</button>
                     </form>
                     <% }%>
                 </div>
             </div>
         </div>
-
         <div class="col-lg-9">
             <div class="center white">
                 <h1 class="text-center"><%=campground.name%></h1>
                 <img class="card-img-top text-danger text-left mx-auto img-fluid img-thumbnail" src="<%=campground.image%>" width="50%"alt="Image failed to load">
-                <h3 class="text-center"> Campground Coords: <%= campground.lat %> <%=campground.long%></h3>
+               <!--<# <h3 class="text-center"> Campground Coords: <%= campground.lat %> <%=campground.long%></h3>#>-->
                 <div class=" padding-5">
-                <p> <%= campground.discrip%></p>
-                <p>Campground added by: <%= campground.author.username%></p>
+                    <p> <%= campground.discrip%></p>
+                    <p>Campground added by: <%= campground.author.username%></p>
                 </div>
-            <div class="row">
-                <div class="col-6 col*">
-                    <div class="row">
-                        <div class="col-6 col*">
-                            <h3 class="text-center">Comments</h3>
+                <div class="row">
+                    <div class="col-6 col*">
+                        <div class="row">
+                            <div class="col-6 col*">
+                                <h3 class="text-center">Comments</h3>
+                            </div>
+                            <div class="col-md-6 col-sm-3">
+                                <a class="btn btn-block btn-info" href="/campground/<%=campground.id%>/comments/new">Add a Review</a>
+                            </div>
                         </div>
-                        <div class="col-md-6 col-sm-3">
-                            <a class="btn btn-block btn-info" href="/campground/<%=campground.id%>/comments/new">Add a Review</a>
-                        </div>
-                    </div>
-                    <hr>
+                        <hr>
                         <%campground.comments.forEach(function(comment){%>
-                            <div class ="well">
-                                <div class="text-left">
-                                    <!-- start the icon addition-->
-                                    <%=comment.author.username%>:
-                                    
-                                    <!-- end the icon addition-->
-                                    <div class="float-right">
-                                        <%if (!currentUser){%>
-                                        <div></div>
-                                    <% }else if (currentUser && comment.author.id.equals(currentUser._id)||currentUser.isAdmin){%>
-                                        <div>
-                                            <form class="delete-form" action="/campground/<%=campground._id%>/comments/<%=comment._id%>/edit">
-                                                <button class="btn btn-sm btn-info">Edit</button>
-                                            </form>
-                                            <form class="delete-form" action="/campground/<%=campground._id%>/comments/<%=comment._id%>?_method=DELETE" method="POST">
-                                                <button class="btn btn-sm btn-danger">Delete</button>
-                                            </form>
-                                        </div>
-                                    <% }%>
+                        <div class ="well">
+                            <div class="text-left">
+                                <!-- start the icon addition-->
+                                <span><% if (comment.author.isOwner){ %>
+                                        <img class="role_icon" src="../assets/images/owner_tent.png">
+                                        <% }else if (comment.author.isAdmin){ %>
+                                        <img class="role_icon" src="../assets/images/admin_tent.png">
+                                        <% }else if (comment.author.isCamper){ %>
+                                        <img class="role_icon" src="../assets/images/camper_tent.png">
+                                        <% }else{ %>
+                                        <img class="role_icon" src="../assets/images/gen_tent.png">
+                                        <% }%>
+                                        
+                                </span>
+                               <span class="test"><%=comment.author.username%>:</span>
+                                
+                                <!-- end the icon addition-->
+                                <div class="float-right">
+                                    <%if (currentUser && comment.author.id.equals(currentUser._id)||currentUser && currentUser.isAdmin){%>
+                                    <div>
+                                        <form class="delete-form" action="/campground/<%=campground._id%>/comments/<%=comment._id%>/edit">
+                                            <button class="btn btn-sm btn-info">Edit</button>
+                                        </form>
+                                        <form class="delete-form" action="/campground/<%=campground._id%>/comments/<%=comment._id%>?_method=DELETE" method="POST">
+                                            <button class="btn btn-sm btn-danger">Delete</button>
+                                        </form>
                                     </div>
+                                    <% }%>
                                 </div>
-                                <div class="text-left">
+                            </div>
+                            <div class="text-left">
                                 <p ><i><%=comment.text%></i></p>
                                 <span>Rating:</span>
-                                </div>
-                                  
-                                    <hr>
                             </div>
-                            <% })%>
-                        </ul>
+                            
+                            <hr>
+                        </div>
+                        <% })%>
+                    </ul>
                 </div>
                 <div class="col-6 col*">
                     <p> We Recomned This Product</p>
                     <iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//ws-na.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&OneJS=1&Operation=GetAdHtml&MarketPlace=US&source=ac&ref=tf_til&ad_type=product_link&tracking_id=freecamp0a-20&marketplace=amazon&region=US&placement=B004E4AVY8&asins=B004E4AVY8&linkId=ed545971508a984bd3d2da98d30473a2&show_border=false&link_opens_in_new_window=false&price_color=333333&title_color=0066c0&bg_color=ffffff">
-    </iframe>
-
+                    </iframe>
                 </div>
             </div>
             <div class="row pushbottom"> &nbsp</div>
         </div>
-
-
     </div>
-  </div>
+</div>
 </div>
 <!--<div class=" text-center bg-dark">-->
 <!--    <div class="container">-->
@@ -108,6 +110,4 @@
 <!--        </div>-->
 <!--    </div>-->
 <!--</div>-->
-
 <% include ../partials/footer %>
-

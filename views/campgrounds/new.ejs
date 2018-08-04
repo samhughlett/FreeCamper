@@ -1,99 +1,98 @@
+
 <% include ../partials/header %>
 <div class="container font bg-dark white">
-  <h2 class="text-center">Add a New Camping location!!</h2>
-  <form class="bg-dark white top10" method="post" action="/campground">
+  <h2 class="text-center"></h2>
+  <form class="bg-dark white top10" method="post" action="/campground" enctype="multipart/form-data">  
   <div class="container">
   <div class="form-row">
      <div class="form-group col-md-3">
       <label for="">Campground Name</label>
-      <input type="text" class="form-control" name="campname" placeholder="Campground Name" required>
+      <input type="text" class="form-control" name="campground[name]" required>
     </div>
     <div class="form-group col-md-3">
       <label for="inputState">State</label>
-      <select name="state" id="inputState" class="form-control">
-        <option selected>Choose...</option>
+      <select name="campground[state]" id="inputState" class="form-control">
         <option value="Alabama">Alabama</option>
-      	<option value="Alaska">Alaska</option>
-      	<option value="Arizona">Arizona</option>
-      	<option value="Arkansas">Arkansas</option>
-      	<option value="California">California</option>
-      	<option value="Colorado">Colorado</option>
-      	<option value="Connecticut">Connecticut</option>
-      	<option value="Delaware">Delaware</option>
-      	<option value="District of Columbia">District Of Columbia</option>
-      	<option value="Florida">Florida</option>
-      	<option value="Georgia">Georgia</option>
-      	<option value="Hawaii">Hawaii</option>
-      	<option value="Idaho">Idaho</option>
-      	<option value="Illinois">Illinois</option>
-      	<option value="Indiana">Indiana</option>
-      	<option value="Iowa">Iowa</option>
-      	<option value="Kansas">Kansas</option>
-      	<option value="Kentucky">Kentucky</option>
-      	<option value="Louisiana">Louisiana</option>
-      	<option value="Maine">Maine</option>
-      	<option value="Maryland">Maryland</option>
-      	<option value="Massachusetts">Massachusetts</option>
-      	<option value="Michigan">Michigan</option>
-      	<option value="Minnesota">Minnesota</option>
-      	<option value="Mississippi">Mississippi</option>
-      	<option value="Missouri">Missouri</option>
-      	<option value="Montana">Montana</option>
-      	<option value="Nebraska">Nebraska</option>
-      	<option value="Nevada">Nevada</option>
-      	<option value="New Hampshire">New Hampshire</option>
-      	<option value="New Jersey">New Jersey</option>
-      	<option value="New Mexico">New Mexico</option>
-      	<option value="New York">New York</option>
-      	<option value="North Carolina">North Carolina</option>
-      	<option value="North Dakota">North Dakota</option>
-      	<option value="Ohio">Ohio</option>
-      	<option value="Oklahoma">Oklahoma</option>
-      	<option value="Oregon">Oregon</option>
-      	<option value="Pennsylvania">Pennsylvania</option>
-      	<option value="Rhode Island">Rhode Island</option>
-      	<option value="South Carolina">South Carolina</option>
-      	<option value="South Dakota">South Dakota</option>
-      	<option value="Tennessee">Tennessee</option>
-      	<option value="Texas">Texas</option>
-      	<option value="Utah">Utah</option>
-      	<option value="Vermont">Vermont</option>
-      	<option value="Virginia">Virginia</option>
-      	<option value="Washington">Washington</option>
-      	<option value="West Virginia">West Virginia</option>
-      	<option value="Wisconsin">Wisconsin</option>
-      	<option value="Wyoming">Wyoming</option>
+	      <option value="Alaska">Alaska</option>
+	      <option value="Arizona">Arizona</option>
+	      <option value="Arkansas">Arkansas</option>
+	      <option value="California">California</option>
+	      <option value="Colorado">Colorado</option>
+	      <option value="Connecticut">Connecticut</option>
+	      <option value="Delaware">Delaware</option>
+	      <option value="District of Columbia">District Of Columbia</option>
+	      <option value="Florida">Florida</option>
+	      <option value="Georgia">Georgia</option>
+	      <option value="Hawaii">Hawaii</option>
+	      <option value="Idaho">Idaho</option>
+	      <option value="Illinois">Illinois</option>
+	      <option value="Indiana">Indiana</option>
+	      <option value="Iowa">Iowa</option>
+	      <option value="Kansas">Kansas</option>
+	      <option value="Kentucky">Kentucky</option>
+	      <option value="Louisiana">Louisiana</option>
+	      <option value="Maine">Maine</option>
+	      <option value="Maryland">Maryland</option>
+	      <option value="Massachusetts">Massachusetts</option>
+	      <option value="Michigan">Michigan</option>
+	      <option value="Minnesota">Minnesota</option>
+	      <option value="Mississippi">Mississippi</option>
+	      <option value="Missouri">Missouri</option>
+	      <option value="Montana">Montana</option>
+	      <option value="Nebraska">Nebraska</option>
+	      <option value="Nevada">Nevada</option>
+	      <option value="New Hampshire">New Hampshire</option>
+	      <option value="New Jersey">New Jersey</option>
+	      <option value="New Mexico">New Mexico</option>
+	      <option value="New York">New York</option>
+	      <option value="North Carolina">North Carolina</option>
+	      <option value="North Dakota">North Dakota</option>
+	      <option value="Ohio">Ohio</option>
+	      <option value="Oklahoma">Oklahoma</option>
+	      <option value="Oregon">Oregon</option>
+	      <option value="Pennsylvania">Pennsylvania</option>
+	      <option value="Rhode Island">Rhode Island</option>
+	      <option value="South Carolina">South Carolina</option>
+	      <option value="South Dakota">South Dakota</option>
+	      <option value="Tennessee">Tennessee</option>
+	      <option value="Texas">Texas</option>
+	      <option value="Utah">Utah</option>
+	      <option value="Vermont">Vermont</option>
+	      <option value="Virginia">Virginia</option>
+	      <option value="Washington">Washington</option>
+	      <option value="West Virginia">West Virginia</option>
+	      <option value="Wisconsin">Wisconsin</option>
+	      <option value="Wyoming">Wyoming</option>
       </select>
     </div>
    
      <div class="form-group col-md-3">
       <label for="">Latitude</label>
-      <input type="text" class="form-control" name="long" placeholder="Latitude">
+      <input type="text" class="form-control" name="campground[long]">
     </div>
   
   <div class="form-group col-md-3">
     <label for="inputAddress">Latitude</label>
-    <input type="text" class="form-control" name="lat" placeholder="Latitude">
+    <input type="text" class="form-control" name="campground[lat]">
   </div>
   </div>
   <div class="form-group">
     <label for="inputAddress2">Image of Campground</label>
-    <input type="text" class="form-control" name="image" placeholder="image url">
+    <input type="file" class="form-control" id="image" name="image" >
   </div>
   <div class="form-row">
       <div class="form-group col-md-4">
       <label for="firesAllowed">Fires Allowed?</label>
-      <select class="form-control" name="fire">
-        <option selected></option>
+      <select class="form-control" name="campground[fire]">
+
         <option>Unknown</option>
         <option>Yes</option>
         <option>No</option>
       </select>
     </div>
     <div class="form-group col-md-4">
-      <label for="runningWater">Running Water?</label>
-      <select class="form-control"  name="water">
-        <option selected></option>
+      <label for="runningWater">Running Water</label>
+      <select class="form-control"  name="campground[water]">
         <option>Unknown</option>
         <option>Yes</option>
         <option>No</option>
@@ -101,8 +100,7 @@
     </div>
    <div class="form-group col-md-4">
       <label for="publicRestrooms">Public Restrooms?</label>
-      <select class="form-control"name="restroom">
-        <option selected></option>
+      <select class="form-control"name="campground[restroom]">
         <option>Unknown</option>
         <option>Yes</option>
         <option>No</option>
@@ -110,8 +108,7 @@
     </div>
    <div class="form-group col-md-4">
       <label for="rvParking">RV Parking?</label>
-      <select id="rvParking" class="form-control" name="rvParking">
-        <option selected></option>
+      <select id="rvParking" class="form-control" name="campground[rvParking]">
         <option>Unknown</option>
         <option>Yes</option>
         <option>No</option>
@@ -119,16 +116,15 @@
     </div>
    <div class="form-group col-md-4">
       <label for="cellService">Cell Service?</label>
-      <select name="cell" id="cellService" class="form-control">
-        <option selected></option>
+      <select name="cell" id="campground[cellService]" class="form-control">
         <option>Unknown</option>
         <option>Yes</option>
         <option>No</option>
       </select>
-      </div>
+    </div>
     <div class="form-group col-md-4">
       <label for="ppn">Price Per Night?</label>
-      <select name="ppn" id="ppn" class="form-control">
+      <select name="campground[ppn]" id="ppn" class="form-control">
         <option value="Free">0</option>
         <option value="$1">1</option>
         <option value="$2">2</option>
@@ -180,65 +176,15 @@
         <option value="$48">48</option>
         <option value="$49">49</option>
         <option value="$50">50</option>
-        <option value="$51">51</option>
-        <option value="$52">52</option>
-        <option value="$53">53</option>
-        <option value="$54">54</option>
-        <option value="$55">55</option>
-        <option value="$56">56</option>
-        <option value="$57">57</option>
-        <option value="$58">58</option>
-        <option value="$59">59</option>
-        <option value="$60">60</option>
-        <option value="$61">61</option>
-        <option value="$62">62</option>
-        <option value="$63">63</option>
-        <option value="$64">64</option>
-        <option value="$65">65</option>
-        <option value="$66">66</option>
-        <option value="$67">67</option>
-        <option value="$68">68</option>
-        <option value="$69">69</option>
-        <option value="$70">70</option>
-        <option value="$71">71</option>
-        <option value="$72">72</option>
-        <option value="$73">73</option>
-        <option value="$74">74</option>
-        <option value="$75">75</option>
-        <option value="$76">76</option>
-        <option value="$77">77</option>
-        <option value="$78">78</option>
-        <option value="$79">79</option>
-        <option value="$80">80</option>
-        <option value="$81">81</option>
-        <option value="$82">82</option>
-        <option value="$83">83</option>
-        <option value="$84">84</option>
-        <option value="$85">85</option>
-        <option value="$86">86</option>
-        <option value="$87">87</option>
-        <option value="$88">88</option>
-        <option value="$89">89</option>
-        <option value="$90">90</option>
-        <option value="$91">91</option>
-        <option value="$92">92</option>
-        <option value="$93">93</option>
-        <option value="$94">94</option>
-        <option value="$95">95</option>
-        <option value="$96">96</option>
-        <option value="$97">97</option>
-        <option value="$98">98</option>
-        <option value="$99">99</option>
-        <option value="$100">100</option>
       </select>
       </div>
     <div class="form-group col-md-12">
       <label for="discription">Discription of Campground</label>
-      <textarea type="text" class="form-control" name="discrip" placeholder="Discribe the camping area you stay at" required></textarea>
+      <textarea type="text" class="form-control" name="campground[discrip]"  required></textarea>
     </div>
-  <button class="btn btn-lg btn-secondary btn-dark btn-block border" type="submit">Add Campground</button>
+  <button class="btn btn-lg btn-secondary btn-dark btn-block border bottom10" type="submit">Done</button>
 </div>
-<div class="top10">&nbsp</div>
+
 </form>
 </div>
 <% include ../partials/footer %>

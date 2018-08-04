@@ -35,6 +35,9 @@ router.post("/", middle.loggedIn, (req, res) => {
                     //working on adding user recongnition. through middleware
                     comment.author.id = req.user._id;
                     comment.author.username = req.user.username;
+                    comment.author.isAdmin = req.user.isAdmin;
+                    comment.author.isOwner = req.user.isOwner;
+                    comment.author.isCamper = req.user.isCamper;
                     console.log(comment);
                     comment.save();
                     campground.comments.push(comment);
@@ -52,14 +55,13 @@ router.post("/", middle.loggedIn, (req, res) => {
 //  Edit the user comments.
 router.get("/:comment_id/edit", middle.loggedIn, (req, res) => {
     Comment.findById(req.params.comment_id, (err, foundComment) => {
-        if (err) {
-            res.render("error");
+        if (err || !foundComment) {
+            req.flash("error", "Something went wrong, contact Web Admin.");
+            res.redirect('back');
         }
         else {
+            req.flash('success', 'Thank you for your comment')
             res.render("comments/edit", { campground_id: req.params.id, comment: foundComment });
-            console.log(req.params.id);
-            console.log(req.params.comment_id);
-            console.log(foundComment.text); // returns undifined..
         }
     });
 });
@@ -67,7 +69,8 @@ router.get("/:comment_id/edit", middle.loggedIn, (req, res) => {
 router.put('/:comment_id', middle.loggedIn, (req, res) => {
     Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, (err, updated) => {
         if (err) {
-            res.render('error');
+            req.flash("error", "Something went wrong, contact Web Admin.");
+            res.redirect('back');        
         }
         else {
             res.redirect('/campground/' + req.params.id);
@@ -80,9 +83,11 @@ router.put('/:comment_id', middle.loggedIn, (req, res) => {
 router.delete('/:comment_id', middle.loggedIn, (req, res) => {
     Comment.findByIdAndRemove(req.params.comment_id, function(err) {
         if (err) {
-            res.render('error');
+            req.flash("error", "Something went wrong, contact Web Admin.");
+            res.redirect('back');
         }
         else {
+            req.flash('success', 'Your comment has been removed');
             res.redirect('/campground/' + req.params.id);
         }
     });
@@ -91,7 +96,7 @@ router.delete('/:comment_id', middle.loggedIn, (req, res) => {
 //                  CATCH ALL RAOUTE AND EXPORTS 
 //==============================================================================
 
-router.get("/:*", (req, res) => {
-    res.render('/notfound');
+router.get("/*", (req, res) => {
+    res.redirect('back');
 });
 module.exports = router;

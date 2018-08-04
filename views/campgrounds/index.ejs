@@ -1,7 +1,7 @@
 
 <% include ../partials/header %>
 <div class="container font">
-<div class="jumbotron  white bg-dark top10">
+<div class="jumbotron  white bg-dark1 top10">
     <div class=" text-center">
         <h1 class="textshadow">Camp around the world with us!</h1>
         <hr>
@@ -19,7 +19,7 @@
                 <div class="card bg-darkO" style="width: 100%; height: 100%;">
                     <div class="card-body">
                       <img class="card-img-top text-danger" src="<%=campground.image%>" alt="Image failed to load">
-                              <span> Locatied in: <%=campground.state%> </span>
+                              <span> Located in: <%=campground.state%> </span>
                         <h5 class="card-title text-light"><%= campground.name%></h5>
                         <p class="card-text text-light"><%= campground.discrip%></p>
                         <a href="/campground/<%=campground.id%>" class="btn btn-secondary">Read More</a>

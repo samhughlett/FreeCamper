@@ -24,32 +24,11 @@ router.get("/signup", function(req, res) {
 router.post("/signup", function(req, res) {
     var newUser = new User({ username: req.body.username, email: req.body.email });
     User.register(newUser, req.body.password, function(err, user) {
-        async.waterfall([
-            function(user, done) {
-                var smtpTransport = nodemailer.createTransport({
-                    service: 'Gmail',
-                    auth: {
-                        user: 'freecampreset@gmail.com',
-                        pass: process.env.GMAILPW
-                    }
-                });
-                var mailOptions = {
-                    to: user.email,
-                    from: 'freecampreset@gmail.com',
-                    subject: 'Your password has been changed',
-                    text: 'Hello,\n\n' +
-                        'This is a confirmation that the password for your account ' + user.email + ' has just been changed.\n'
-                };
-                smtpTransport.sendMail(mailOptions, function(err) {
-                    req.flash('success', 'Success! Your password has been changed.');
-                });
-            },
-        ]);
         if (err) {
-            console.log(err);
-            return res.render("error");
+           return res.render("users/signup", {error: err.message});
         }
         passport.authenticate("local")(req, res, function() {
+            req.flash('error', user.username +', Welcome to CheapCamp, enjoy your stay.')
             return res.redirect("/campground");
         });
     });
@@ -60,13 +39,19 @@ router.get("/login", (req, res) => {
     res.render("users/login");
 });
 
-router.post("/login", passport.authenticate("local", {
-    successRedirect: '/campground',
-    failureRedirect: '/login'
-}), function(req, res) {});
+router.post("/login", passport.authenticate("local", 
+    {
+        successRedirect: "/campground",
+        failureRedirect: "/login",
+        failureFlash: true,
+        successFlash: 'Welcome back'
+    }), function(req, res){
+        
+});
 
 router.get("/logout", (req, res) => {
     req.logout();
+    req.flash('success', 'Seen you soon!');
     res.redirect("/campground");
 });
 
