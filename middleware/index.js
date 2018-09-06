@@ -34,12 +34,13 @@ module.exports = {
   campOwner: function(req, res, next) {
     if (req.isAuthenticated()) {
       Campground.findById(req.params.id, function(err, foundCamp) {
-        if (err) {
-          res.flash('error', 'Camp not found please contact Web Admin.');
-          return res.redirect('back');
+               if(err || !foundCamp){
+           console.log(err);
+           req.flash('error', 'Sorry, that comment does not exist!');
+           res.redirect('/campgrounds');
         }
         else {
-          if (foundCamp.author.id.equals(req.user._id)) {
+           if (foundCamp.author.id.equals(req.user._id)) {
             next();
           }
           else {
@@ -53,7 +54,7 @@ module.exports = {
   commentOwner: function(req, res, next) {
     if (req.isAuthenticated()) {
       Comment.findById(req.params.id, function(err, foundComment) {
-        if (err) {
+        if (err || !foundComment) {
           res.flash('error', 'Camp not found please contact Web Admin.');
           return res.redirect('back');
         }
